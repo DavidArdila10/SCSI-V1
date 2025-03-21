@@ -1,0 +1,116 @@
+/* ===== import.css ===== */
+
+/* Posición de los cohetes en el centro de la pantalla */
+.rocket-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+  }
+  
+  
+    
+  
+  
+  /* Ajuste del tamaño del cohete */
+  .rocket-image {
+    width: 60px;
+    height: auto;
+    position: relative; /* para posicionar los pseudo-elementos de humo */
+  }
+  
+  /* -- Animación de despegue -- */
+  @keyframes rocketTakeOff {
+    0% {
+      transform: translateY(0) scale(1);
+    }
+    25% {
+      transform: translateY(-15vh) scale(1.1);
+    }
+    50% {
+      transform: translateY(-40vh) scale(1.2);
+    }
+    75% {
+      transform: translateY(-60vh) scale(1.3);
+    }
+    100% {
+      transform: translateY(-90vh) scale(1.4);
+      opacity: 0;
+    }
+  }
+  
+  /* El cohete despega por 4s */
+  .rocket-launch {
+    animation: rocketTakeOff 4s forwards;
+  }
+  
+  /* ============================= */
+  /*       Burbujas / Humo         */
+  /* ============================= */
+  /*
+     Usamos ::before y ::after para generar dos "burbujas" de humo 
+     con animaciones escalonadas (diferente delay).
+  */
+  
+  /* Primer puff de humo */
+  .rocket-image::before {
+    content: "";
+    position: absolute;
+    bottom: -10px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;  
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  
+    /* Animación "infinita", se repite mientras el cohete esté presente */
+    animation: smokeTrail 1.4s linear infinite;
+  }
+  
+  /* Segundo puff de humo (con delay para alternarse) */
+  .rocket-image::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  
+    /* Empieza medio segundo más tarde para que no salgan exactas */
+    animation: smokeTrail 1.4s linear infinite;
+    animation-delay: 0.7s;
+  }
+  
+  /* 
+     Keyframes para que el "puff" suba un poco, 
+     se agrande y se desvanezca.
+  */
+  @keyframes smokeTrail {
+    0% {
+      transform: translate(-50%, 0) scale(0.5);
+      opacity: 0.8;
+    }
+    30% {
+      transform: translate(-50%, -20px) scale(1);
+      opacity: 0.6;
+    }
+    60% {
+      transform: translate(-50%, -40px) scale(1.2);
+      opacity: 0.4;
+    }
+    100% {
+      transform: translate(-50%, -60px) scale(1.4);
+      opacity: 0;
+    }
+  }
+  
